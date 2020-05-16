@@ -9,7 +9,7 @@ function getUser() {
                 name: 'Aladin',
                 bornDate: new Date(),
             });
-        }, 10);
+        }, 1000);
     });
 }
 
@@ -20,7 +20,7 @@ function getPhone(idUser) {
                 phone: '123456789',
                 ddd: '00',
             });
-        }, 10);
+        }, 1000);
     });
 }
 
@@ -28,41 +28,35 @@ function getAddress(idUser, callback) {
     setTimeout(() => {
         return callback(null, {
             address: 'Washinton Borner',
-            number: 100,
+            number: 10000,
         });
-    }, 10);
+    }, 1000);
 }
 
-const userPromise = getUser();
+main();
 
-userPromise
-    .then((user) => {
-        return getPhone(user.id).then((result) => {
-            return {
-                user: {
-                    name: user.name,
-                    id: user.id,
-                },
-                phone: result,
-            };
-        });
-    })
-    .then((data) => {
-        const address = getAddressAsync(data.user.id);
-        return address.then((result) => {
-            return {
-                user: data.user,
-                phone: data.phone,
-                address: result,
-            };
-        });
-    })
-    .then(function (result) {
+async function main() {
+    try {
+        console.time('time-promise');
+        const user = await getUser();
+        // const phone = await getPhone(user.id);
+        // const address = await getAddressAsync(user.id);
+
+        const result = await Promise.all([
+            getPhone(user.id),
+            getAddressAsync(user.id),
+        ]);
+
+        const phone = result[0];
+        const address = result[1];
+
         console.log(`
-        Name: ${result.user.name}
-        Address: ${result.address.address}, ${result.address.number}
-        Phone: (${result.phone.ddd}) ${result.phone.phone}`);
-    })
-    .catch((err) => {
-        console.error('There was error in the user' + err);
-    });
+        Name: ${user.name}
+        Phone: (${phone.ddd}) ${phone.phone}
+        Adress: ${address.address}
+        `);
+        console.timeEnd('time-promise');
+    } catch (err) {
+        console.error('Error>>> ' + err);
+    }
+}
