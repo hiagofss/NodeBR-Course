@@ -1,0 +1,14 @@
+{
+    "name": "nodebr-course",
+    "version": "1.0.0",
+    "main": "index.js",
+    "author": "Hiago Souza",
+    "repository": "https://github.com/hiagofss/NodeBR-Curso.git",
+    "license": "MIT",
+    "scripts": {
+        "test": "echo Test"
+    },
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    }
+}
