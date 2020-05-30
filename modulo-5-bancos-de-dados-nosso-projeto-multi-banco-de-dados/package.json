@@ -1,0 +1,14 @@
+{
+    "name": "multi-tenancy",
+    "version": "1.0.0",
+    "description": "",
+    "main": "index.js",
+    "scripts": {
+        "dev": "nodemon src/index.js"
+    },
+    "author": "Hiago Souza",
+    "license": "MIT",
+    "devDependencies": {
+        "nodemon": "^2.0.4"
+    }
+}
